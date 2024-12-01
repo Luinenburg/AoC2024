@@ -16,15 +16,6 @@ public class PuzzleRunner
 
 	private static readonly Assembly[] s_assemblies =
 	[
-		Assembly.GetAssembly(typeof(Puzzles._2015.Day_01_Original))!,
-		Assembly.GetAssembly(typeof(Puzzles._2016.Day_01_Original))!,
-		Assembly.GetAssembly(typeof(Puzzles._2017.Day_01_Original))!,
-		Assembly.GetAssembly(typeof(Puzzles._2018.Day_01_Original))!,
-		Assembly.GetAssembly(typeof(Puzzles._2019.Day_01_Original))!,
-		Assembly.GetAssembly(typeof(Puzzles._2020.Day_01_Original))!,
-		Assembly.GetAssembly(typeof(Puzzles._2021.Day_01_Original))!,
-		Assembly.GetAssembly(typeof(Puzzles._2022.Day_01_Original))!,
-		Assembly.GetAssembly(typeof(Puzzles._2023.Day_01_Original))!,
 		Assembly.GetAssembly(typeof(Puzzles._2024.Day_01_Original))!,
 	];
 

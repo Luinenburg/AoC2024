@@ -22,15 +22,6 @@
 
   <ItemGroup>
 	<ProjectReference Include="..\AdventOfCode.Common\AdventOfCode.Common.csproj" />
-	<ProjectReference Include="..\AdventOfCode.Puzzles\2015\AdventOfCode.Puzzles.2015.csproj" />
-	<ProjectReference Include="..\AdventOfCode.Puzzles\2016\AdventOfCode.Puzzles.2016.csproj" />
-	<ProjectReference Include="..\AdventOfCode.Puzzles\2017\AdventOfCode.Puzzles.2017.csproj" />
-	<ProjectReference Include="..\AdventOfCode.Puzzles\2018\AdventOfCode.Puzzles.2018.csproj" />
-	<ProjectReference Include="..\AdventOfCode.Puzzles\2019\AdventOfCode.Puzzles.2019.csproj" />
-	<ProjectReference Include="..\AdventOfCode.Puzzles\2020\AdventOfCode.Puzzles.2020.csproj" />
-	<ProjectReference Include="..\AdventOfCode.Puzzles\2021\AdventOfCode.Puzzles.2021.csproj" />
-	<ProjectReference Include="..\AdventOfCode.Puzzles\2022\AdventOfCode.Puzzles.2022.csproj" />
-	<ProjectReference Include="..\AdventOfCode.Puzzles\2023\AdventOfCode.Puzzles.2023.csproj" />
 	<ProjectReference Include="..\AdventOfCode.Puzzles\2024\AdventOfCode.Puzzles.2024.csproj" />
   </ItemGroup>
 
