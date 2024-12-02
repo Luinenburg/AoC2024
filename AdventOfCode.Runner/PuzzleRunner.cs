@@ -14,9 +14,9 @@ public class PuzzleRunner
 	private readonly MethodInfo _runMethod;
 	private readonly Type _benchmarkClass;
 
-	private static readonly Assembly[] s_assemblies =
+	private static readonly Assembly[] SAssemblies =
 	[
-		Assembly.GetAssembly(typeof(Puzzles._2024.Day_01_Original))!,
+		Assembly.GetAssembly(typeof(Puzzles._2024.Day01Original))!,
 	];
 
 	public PuzzleRunner()
@@ -58,7 +58,7 @@ public class PuzzleRunner
 
 	private static List<PuzzleModel> GetAllPuzzles()
 	{
-		var c = s_assemblies
+		var c = SAssemblies
 			.SelectMany(
 				assembly => assembly.GetTypes(),
 				(assembly, type) => new

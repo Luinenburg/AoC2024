@@ -8,10 +8,6 @@
 	<ImplicitUsings>enable</ImplicitUsings>
 	<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 
-	<AnalysisLevel>latest-all</AnalysisLevel>
-	<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-	<GenerateDocumentationFile>true</GenerateDocumentationFile>
-
 	<TieredPGO>true</TieredPGO>
   </PropertyGroup>
 
