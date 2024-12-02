@@ -5,9 +5,16 @@ public class Day01Original : IPuzzle
 {
 	public (string, string) Solve(PuzzleInput input)
 	{
-		var part1 = GetDistances(GetHalves(ConvertToArray(input.Lines))).Sum().ToString();
+		var part1 = GetDistances(
+			GetHalves(
+				ConvertToArray(input.Lines)))
+			.Sum()
+			.ToString();
 
-		var part2 = GetSimilarityScore(GetHalves(ConvertToArray(input.Lines))).ToString();
+		var part2 = GetSimilarityScore(
+			GetHalves(
+				ConvertToArray(input.Lines)))
+			.ToString();
 
 		return (part1, part2);
 	}
