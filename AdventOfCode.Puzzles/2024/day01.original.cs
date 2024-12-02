@@ -1,9 +1,18 @@
 namespace AdventOfCode.Puzzles._2024;
 
 [Puzzle(2024, 01, CodeType.Original)]
-public class Day_01_Original : IPuzzle
+public class Day01Original : IPuzzle
 {
-	public (int, int)[] convertToArray(string[] input)
+	public (string, string) Solve(PuzzleInput input)
+	{
+		var part1 = GetDistances(GetHalves(ConvertToArray(input.Lines))).Sum().ToString();
+
+		var part2 = GetSimilarityScore(GetHalves(ConvertToArray(input.Lines))).ToString();
+
+		return (part1, part2);
+	}
+
+	private static (int, int)[] ConvertToArray(string[] input)
 	{
 		return input.Select(line =>
 			{
@@ -13,52 +22,44 @@ public class Day_01_Original : IPuzzle
 		).ToArray();
 	}
 
-	public (int[], int[]) getHalves((int, int)[] input)
+	private static (int[], int[]) GetHalves((int, int)[] input)
 	{
-		(int[], int[]) result = (new int[input.Length], new int[input.Length]);
+		var result = (new int[input.Length], new int[input.Length]);
 		for (var y = 0; y < input.Length; y++)
 		{
 			result.Item1[y] = input[y].Item1;
 			result.Item2[y] = input[y].Item2;
 		}
-		
+
 		return result;
 	}
 
-	public int[] getDistances((int[], int[]) input)
+	private static int[] GetDistances((int[], int[]) input)
 	{
-		int[] result = new int[input.Item1.Length];
+		var result = new int[input.Item1.Length];
 		Array.Sort(input.Item1, (a, b) => a.CompareTo(b));
 		Array.Sort(input.Item2, (a, b) => a.CompareTo(b));
 		for (var y = 0; y < result.Length; y++)
 		{
 			result[y] = Math.Abs(input.Item1[y] - input.Item2[y]);
 		}
+
 		return result;
 	}
 
-	public int getSimilarity(int reference, int[] list)
+	private static int GetSimilarity(int reference, int[] list)
 	{
 		return reference * list.Count(reference2 => reference2 == reference);
 	}
 
-	public int getSimilarityScore((int[], int[]) input)
+	private static int GetSimilarityScore((int[], int[]) input)
 	{
-		int score = 0;
-		for (var y = 0; y < input.Item1.Length; y++)
+		var score = 0;
+		foreach (var item in input.Item1)
 		{
-			score += getSimilarity(input.Item1[y], input.Item2);
+			score += GetSimilarity(item, input.Item2);
 		}
 
 		return score;
-	}
-	
-	public (string, string) Solve(PuzzleInput input)
-	{
-		var part1 = getDistances(getHalves(convertToArray(input.Lines))).Sum().ToString();
-
-		var part2 = getSimilarityScore(getHalves(convertToArray(input.Lines))).ToString();
-
-		return (part1, part2);
 	}
 }
