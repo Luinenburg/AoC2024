@@ -5,15 +5,13 @@ namespace AdventOfCode.Runner;
 
 public sealed class PuzzleInputProvider
 {
-	public static PuzzleInputProvider Instance { get; } = new();
-
 	private readonly HttpClient _httpClient;
 
 	private PuzzleInputProvider()
 	{
 		var configuration = new ConfigurationBuilder()
 			.SetBasePath(Directory.GetCurrentDirectory())
-			.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+			.AddJsonFile("appsettings.json", true, true)
 			.AddEnvironmentVariables()
 			.Build();
 		var sessionId = configuration["sessionId"];
@@ -26,16 +24,21 @@ public sealed class PuzzleInputProvider
 			new HttpClientHandler
 			{
 				CookieContainer = cookieContainer,
-				AutomaticDecompression = DecompressionMethods.All,
+				AutomaticDecompression = DecompressionMethods.All
 			})
 		{
 			BaseAddress = baseAddress,
 			DefaultRequestHeaders =
 			{
-				{ "User-Agent", ".NET/9.0 (https://github.com/viceroypenguin/adventofcode by stuart@turner-isageek.com)" },
-			},
+				{
+					"User-Agent",
+					".NET/9.0 (https://github.com/viceroypenguin/adventofcode by stuart@turner-isageek.com)"
+				}
+			}
 		};
 	}
+
+	public static PuzzleInputProvider Instance { get; } = new();
 
 	public PuzzleInput GetRawInput(int year, int day)
 	{
@@ -55,7 +58,7 @@ public sealed class PuzzleInputProvider
 			File.WriteAllText(inputFile, text);
 		}
 
-		return new(
+		return new PuzzleInput(
 			File.ReadAllBytes(inputFile),
 			File.ReadAllText(inputFile),
 			File.ReadAllLines(inputFile));

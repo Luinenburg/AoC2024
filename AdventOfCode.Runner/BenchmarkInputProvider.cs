@@ -6,7 +6,7 @@ public static class BenchmarkInputProvider
 	{
 		var inputFile = $"../../../../../../../Inputs/{year}/day{day:00}.input.txt";
 
-		return new(
+		return new PuzzleInput(
 			File.ReadAllBytes(inputFile),
 			File.ReadAllText(inputFile),
 			File.ReadAllLines(inputFile));

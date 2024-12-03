@@ -20,7 +20,8 @@ public sealed partial class Day03Aaron : IPuzzle
 				{
 					"do()" => (true, current.Item2),
 					"don't()" => (false, current.Item2),
-					_ when current.Item1 => (current.Item1, current.Item2 + long.Parse(m.Groups[1].Value) * long.Parse(m.Groups[2].Value)),
+					_ when current.Item1 => (current.Item1,
+						current.Item2 + long.Parse(m.Groups[1].Value) * long.Parse(m.Groups[2].Value)),
 					_ => current
 				})
 			.Item2.ToString();

@@ -18,5 +18,8 @@ public class PuzzleBenchmarkRunner<TPuzzle>
 	}
 
 	[Benchmark]
-	public (string, string) Solve() => _puzzle.Solve(_rawInput!);
+	public (string, string) Solve()
+	{
+		return _puzzle.Solve(_rawInput!);
+	}
 }

@@ -1,7 +1,6 @@
 namespace AdventOfCode.Puzzles._2024;
 
 [Puzzle(2024, 03, CodeType.Fastest)]
-
 public class Day03Original : IPuzzle
 {
 	public (string, string) Solve(PuzzleInput input)
@@ -22,15 +21,17 @@ public class Day03Original : IPuzzle
 					canAdd = false;
 					continue;
 			}
+
 			if (canAdd) p2Sum += ParseMul(match);
 		}
-		
+
 		var part2 = p2Sum.ToString();
-		
+
 		return (part1, part2);
 	}
+
 	private static int ParseMul(string input)
 	{
 		return input.Substring(4, input.Length - 5).Split(',').Aggregate(1, (total, value) => total * int.Parse(value));
 	}
-}                              
+}

@@ -1,6 +1,7 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
+using AdventOfCode.Puzzles._2024;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Order;
 using BenchmarkDotNet.Reports;
@@ -10,14 +11,14 @@ namespace AdventOfCode.Runner;
 
 public class PuzzleRunner
 {
-	private readonly IReadOnlyList<PuzzleModel> _puzzles;
-	private readonly MethodInfo _runMethod;
-	private readonly Type _benchmarkClass;
-
 	private static readonly Assembly[] SAssemblies =
 	[
-		Assembly.GetAssembly(typeof(Puzzles._2024.Day01Original))!,
+		Assembly.GetAssembly(typeof(Day01Original))!
 	];
+
+	private readonly Type _benchmarkClass;
+	private readonly IReadOnlyList<PuzzleModel> _puzzles;
+	private readonly MethodInfo _runMethod;
 
 	public PuzzleRunner()
 	{
@@ -28,13 +29,15 @@ public class PuzzleRunner
 
 	public IReadOnlyCollection<PuzzleModel> Puzzles => _puzzles;
 
-	public IEnumerable<PuzzleResult> RunPuzzles(IEnumerable<PuzzleModel> puzzles) =>
-		puzzles
+	public IEnumerable<PuzzleResult> RunPuzzles(IEnumerable<PuzzleModel> puzzles)
+	{
+		return puzzles
 			.Select(puzzle =>
 			{
 				var method = _runMethod.MakeGenericMethod(puzzle.PuzzleType);
 				return (PuzzleResult)method.Invoke(null, [puzzle])!;
 			});
+	}
 
 	public Summary BenchmarkPuzzles(IEnumerable<PuzzleModel> puzzles)
 	{
@@ -48,14 +51,6 @@ public class PuzzleRunner
 					.WithOrderer(new TypeOrderer()));
 	}
 
-	private sealed class TypeOrderer : DefaultOrderer, IOrderer
-	{
-		public override IEnumerable<BenchmarkCase> GetSummaryOrder(ImmutableArray<BenchmarkCase> benchmarksCases, Summary summary) =>
-			benchmarksCases
-				.OrderBy(c => c.Descriptor.Type.FullName)
-				.ThenBy(c => c.Descriptor.MethodIndex);
-	}
-
 	private static List<PuzzleModel> GetAllPuzzles()
 	{
 		var c = SAssemblies
@@ -64,7 +59,7 @@ public class PuzzleRunner
 				(assembly, type) => new
 				{
 					Type = type,
-					PuzzleAttribute = type.GetCustomAttribute<PuzzleAttribute>()!,
+					PuzzleAttribute = type.GetCustomAttribute<PuzzleAttribute>()!
 				})
 			.Where(x => x.PuzzleAttribute != null);
 
@@ -101,5 +96,16 @@ public class PuzzleRunner
 		}
 
 		return new PuzzleResult(puzzleInfo, part1, part2, elapsed);
+	}
+
+	private sealed class TypeOrderer : DefaultOrderer, IOrderer
+	{
+		public override IEnumerable<BenchmarkCase> GetSummaryOrder(ImmutableArray<BenchmarkCase> benchmarksCases,
+			Summary summary)
+		{
+			return benchmarksCases
+				.OrderBy(c => c.Descriptor.Type.FullName)
+				.ThenBy(c => c.Descriptor.MethodIndex);
+		}
 	}
 }

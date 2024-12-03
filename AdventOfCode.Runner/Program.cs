@@ -8,18 +8,26 @@ var console = AnsiConsole.Create(new AnsiConsoleSettings());
 
 if (args.Length > 0)
 {
-	static int ShowHelp(string help) { Console.WriteLine(help); return 0; }
+	static int ShowHelp(string help)
+	{
+		Console.WriteLine(help);
+		return 0;
+	}
 
-	static int OnError(string error) { Console.Error.WriteLine(error); return 1; }
+	static int OnError(string error)
+	{
+		Console.Error.WriteLine(error);
+		return 1;
+	}
 
 	return ProgramArguments.CreateParser()
-		.Parse(args) switch
-	{
-		IArgumentsResult<ProgramArguments> { Arguments: var arguments } => Main(arguments),
-		IHelpResult { Help: var help } => ShowHelp(help),
-		IInputErrorResult { Error: var error } => OnError(error),
-		var result => throw new SwitchExpressionException(result),
-	};
+			.Parse(args) switch
+		{
+			IArgumentsResult<ProgramArguments> { Arguments: var arguments } => Main(arguments),
+			IHelpResult { Help: var help } => ShowHelp(help),
+			IInputErrorResult { Error: var error } => OnError(error),
+			var result => throw new SwitchExpressionException(result)
+		};
 
 	int Main(ProgramArguments arguments)
 	{
@@ -38,22 +46,18 @@ if (args.Length > 0)
 		}
 
 		if (arguments.OptBenchmark)
-		{
 			_ = runner.BenchmarkPuzzles(puzzles);
-		}
 		else
-		{
 			RunPuzzles(puzzles
 				.OrderBy(p => p.Year)
 				.ThenBy(p => p.Day)
 				.ThenBy(p => p.CodeType == CodeType.Original ? 0 : 1)
 				.ToList());
-		}
 
 		return 0;
 	}
 }
-else
+
 {
 	var font = FigletFont.Default;
 	var f = new FigletText(font, "Advent of Code")
@@ -84,26 +88,20 @@ else
 	var doBenchmark = console.Confirm("Do you want to benchmark?", false);
 
 	if (doBenchmark)
-	{
 		runner.BenchmarkPuzzles(puzzles);
-	}
 	else
-	{
 		RunPuzzles(puzzles);
-	}
 
 	(int, IReadOnlyCollection<PuzzleModel>) PickYear(IReadOnlyCollection<PuzzleModel> puzzles, IReadOnlyList<int> years)
 	{
 		var year = years[^1];
 
 		if (years.Count > 1)
-		{
 			year = console.Prompt(
 				new SelectionPrompt<int>()
 					.Title("Which [green]year[/] do you want to execute?")
 					.PageSize(20)
 					.AddChoices(years));
-		}
 
 		return (year, puzzles.Where(x => x.Year == year).ToList());
 	}

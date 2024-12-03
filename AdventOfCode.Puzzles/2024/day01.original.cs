@@ -6,14 +6,14 @@ public class Day01Original : IPuzzle
 	public (string, string) Solve(PuzzleInput input)
 	{
 		var part1 = GetDistances(
-			GetHalves(
-				ConvertToArray(input.Lines)))
+				GetHalves(
+					ConvertToArray(input.Lines)))
 			.Sum()
 			.ToString();
 
 		var part2 = GetSimilarityScore(
-			GetHalves(
-				ConvertToArray(input.Lines)))
+				GetHalves(
+					ConvertToArray(input.Lines)))
 			.ToString();
 
 		return (part1, part2);
@@ -46,10 +46,7 @@ public class Day01Original : IPuzzle
 		var result = new int[input.Item1.Length];
 		Array.Sort(input.Item1, (a, b) => a.CompareTo(b));
 		Array.Sort(input.Item2, (a, b) => a.CompareTo(b));
-		for (var y = 0; y < result.Length; y++)
-		{
-			result[y] = Math.Abs(input.Item1[y] - input.Item2[y]);
-		}
+		for (var y = 0; y < result.Length; y++) result[y] = Math.Abs(input.Item1[y] - input.Item2[y]);
 
 		return result;
 	}
@@ -62,10 +59,7 @@ public class Day01Original : IPuzzle
 	private static int GetSimilarityScore((int[], int[]) input)
 	{
 		var score = 0;
-		foreach (var item in input.Item1)
-		{
-			score += GetSimilarity(item, input.Item2);
-		}
+		foreach (var item in input.Item1) score += GetSimilarity(item, input.Item2);
 
 		return score;
 	}
