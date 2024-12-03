@@ -2,12 +2,12 @@ namespace AdventOfCode.Puzzles._2024;
 
 [Puzzle(2024, 03, CodeType.Original)]
 
-public class Day03Original : IPuzzle
+public class Day03Fast : IPuzzle
 {
 	public (string, string) Solve(PuzzleInput input)
 	{
 		var matches = MulDoDontRegex.Search().Matches(input.Text).Select(match => match.ToString()).ToArray();
-		var part1 = matches.Select(match => match.Contains('m') ? ParseMul(match) : 0).ToArray().Sum().ToString();
+		var part1 = matches.Aggregate(0, (total, value) => value.Contains('m') ? total + ParseMul(value) : total).ToString();
 
 		var p2Sum = 0;
 		var canAdd = true;
@@ -33,4 +33,10 @@ public class Day03Original : IPuzzle
 	{
 		return input.Substring(4, input.Length - 5).Split(',').Aggregate(1, (total, value) => total * int.Parse(value));
 	}
+}
+
+public static partial class MulDoDontRegex
+{
+	[GeneratedRegex(@"(mul\(\d+,\d+\))|(do\(\))|(don't\(\))")]
+	public static partial Regex Search();
 }
