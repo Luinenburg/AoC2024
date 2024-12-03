@@ -5,6 +5,7 @@ public enum CodeType
 	Original,
 	Fastest,
 	Revised,
+	External,
 }
 
 [AttributeUsage(AttributeTargets.Class)]
