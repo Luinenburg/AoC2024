@@ -23,8 +23,8 @@ public class Day01Original : IPuzzle
 	{
 		return input.Select(line =>
 			{
-				var balls = line.Split("   ").Select(int.Parse).ToArray();
-				return (balls[0], balls[1]);
+				var halves = line.Split("   ").Select(int.Parse).ToArray();
+				return (halves[0], halves[1]);
 			}
 		).ToArray();
 	}
