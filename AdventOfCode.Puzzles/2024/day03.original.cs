@@ -33,4 +33,4 @@ public class Day03Original : IPuzzle
 	{
 		return input.Substring(4, input.Length - 5).Split(',').Aggregate(1, (total, value) => total * int.Parse(value));
 	}
-}
+}                              

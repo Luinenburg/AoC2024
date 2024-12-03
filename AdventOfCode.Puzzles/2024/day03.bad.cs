@@ -1,5 +1,5 @@
 namespace AdventOfCode.Puzzles._2024;
-[Puzzle(2024, 03, CodeType.Original)]
+// [Puzzle(2024, 03, CodeType.Original)]
 public class Day03Bad : IPuzzle
 {
     public (string, string) Solve(PuzzleInput input)

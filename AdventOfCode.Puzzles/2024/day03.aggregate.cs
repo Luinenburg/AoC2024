@@ -6,26 +6,20 @@ public class Day03Aggregate : IPuzzle
 {
 	public (string, string) Solve(PuzzleInput input)
 	{
-		var matches = MulDoDontRegex.Search().Matches(input.Text).Select(match => match.ToString()).ToArray();
-		var part1 = matches.Aggregate(0, (total, value) => value.Contains('m') ? total + ParseMul(value) : total).ToString();
-
-		var p2Sum = 0;
-		var canAdd = true;
-		foreach (var match in matches)
-		{
-			switch (match)
-			{
-				case "do()":
-					canAdd = true;
-					continue;
-				case "don't()":
-					canAdd = false;
-					continue;
-			}
-			if (canAdd) p2Sum += ParseMul(match);
-		}
+		var matches = MulDoDontRegex.Search().Matches(input.Text).Aggregate((true, 0, 0), (running, match) =>
 		
-		var part2 = p2Sum.ToString();
+			match.ValueSpan switch
+			{
+				"do()" => (true, running.Item2, running.Item3),
+				"don't()" => (false, running.Item2, running.Item3),
+				_ when running.Item1 => (true, running.Item2 + ParseMul(match.Value), running.Item3 + ParseMul(match.Value)),
+				_ when !running.Item1 => (false, running.Item2 + ParseMul(match.Value), running.Item3),
+				_ => running
+			}
+		);
+		var part1 = matches.Item2.ToString();
+
+		var part2 = matches.Item3.ToString();
 		
 		return (part1, part2);
 	}
