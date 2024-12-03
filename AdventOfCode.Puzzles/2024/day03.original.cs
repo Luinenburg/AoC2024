@@ -5,42 +5,35 @@ public class Day03Original : IPuzzle
 {
 	public (string, string) Solve(PuzzleInput input)
 	{
-		var pattern = "(mul\\(\\d+,\\d+\\))|(do\\(\\))|(don't\\(\\))";
-		Regex regex = new(pattern, RegexOptions.Compiled);
+		const string pattern = @"(mul\(\d+,\d+\))|(do\(\))|(don't\(\))";
+		var regex = new Regex(pattern);
 		var matches = regex.Matches(input.Text).Select(match => match.ToString()).ToArray();
-		var parsed = matches.Select(match =>
-		{
-			if (!match.Contains("mul")) return 0;
-			var nums = match.Substring(4, match.Length - 5).Split(",").Select(int.Parse).ToArray();
-			return nums[0] * nums[1];
-		}).ToArray();
-		var part1 = parsed.Sum().ToString();
+		var part1 = matches.Select(match => match.Contains('m') ? ParseMul(match) : 0).ToArray().Sum().ToString();
 
-		var allowed_matches = new List<string>();
-		var can_add = true;
+		var p2Sum = 0;
+		var canAdd = true;
 		foreach (var match in matches)
 		{
-			if (match.Equals("do()"))
+			switch (match)
 			{
-				can_add = true;
-				continue;
+				case "do()":
+					canAdd = true;
+					continue;
+				case "don't()":
+					canAdd = false;
+					continue;
 			}
-			if (match.Equals("don't()"))
-			{
-				can_add = false;
-				continue;
-			}
-			if (can_add) allowed_matches.Add(match);
+			if (canAdd) p2Sum += ParseMul(match);
 		}
 		
-		var part2 = allowed_matches.Select(match =>
-		{
-			var nums = match.Substring(4, match.Length - 5).Split(",").Select(int.Parse).ToArray();
-			return nums[0] * nums[1];
-		}).ToArray().Sum().ToString( );
+		var part2 = p2Sum.ToString();
 		
 		return (part1, part2);
 	}
-	
+	private static int ParseMul(string input)
+	{
+		var a = input.Substring(4, input.Length - 5).Split(',').Select(int.Parse).ToArray();
+		return a[0] * a[1];
+	}
 	
 }
