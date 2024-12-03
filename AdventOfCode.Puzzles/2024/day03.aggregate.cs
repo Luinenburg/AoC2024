@@ -2,7 +2,7 @@ namespace AdventOfCode.Puzzles._2024;
 
 [Puzzle(2024, 03, CodeType.Original)]
 
-public class Day03Fast : IPuzzle
+public class Day03Aggregate : IPuzzle
 {
 	public (string, string) Solve(PuzzleInput input)
 	{
