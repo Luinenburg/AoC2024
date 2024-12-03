@@ -4,6 +4,7 @@ public enum CodeType
 {
 	Original,
 	Fastest,
+	Revised,
 }
 
 [AttributeUsage(AttributeTargets.Class)]
