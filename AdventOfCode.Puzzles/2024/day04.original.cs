@@ -13,7 +13,7 @@ public class Day04Original : IPuzzle
 			('S', 3) => ('J', reference.Item2 + 1),
 			_ => ('_', -1)
 		};
-		if (comparison.Item2 == 4) return true;
+		if (comparison.Item2 == 4 || comparison.Item1.Equals('J')) return true;
 		if (comparison.Item2 == -1) return false;
 
 		if (pivot.Item1 + direction.Item1 < 0 || pivot.Item1 + direction.Item1 >= input[pivot.Item2].Length || pivot.Item2 + direction.Item2 < 0 || pivot.Item2 + direction.Item2 >= input.Length) return false;
@@ -25,14 +25,6 @@ public class Day04Original : IPuzzle
 
 	private static bool checkSurroundings((int, int) pivot, string[] input, char reference)
 	{
-		var comparison = reference switch
-		{
-			'X' => 'M',
-			'M' => 'A',
-			'A' => 'S',
-			_ => '_'
-		};
-		if (comparison.Equals('_')) return true;
 		for (var y = -1; y < 2; y += 1)
 		{
 			for (var x = -1; x < 2; x += 1)
