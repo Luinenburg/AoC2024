@@ -13,16 +13,16 @@ public class day06_original : IPuzzle
         {
             var oldPos = guard.Position;
             guard = MoveGuard(guard, input.Lines, (-1, -1));
-            if (oldPos != guard.Position) visitedPositionsList.Add(guard.Position);
+            if (oldPos != guard.Position && !visitedPositionsList.Contains(guard.Position)) visitedPositionsList.Add(guard.Position);
             if (guard.Position.Item1 >= input.Lines.Length-1 || guard.Position.Item2 >= input.Lines.Length-1 || guard.Position.Item1 <= 0 || guard.Position.Item2 <= 0) break;
         }
 
         var visitedPositions = visitedPositionsList.ToArray();
-        var part1 = visitedPositions.Distinct()
+        var part1 = visitedPositions
             .Count()
             .ToString();
 
-        var part2 = ValidObstaclePlacement(originalGuard, visitedPositions.Distinct().ToArray(), input.Lines).Length.ToString();
+        var part2 = ValidObstaclePlacement(originalGuard, visitedPositions.ToArray(), input.Lines).Length.ToString();
         return (part1, part2);
     }
 
