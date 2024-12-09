@@ -16,8 +16,8 @@ public class Day04Original : IPuzzle
 		if (comparison.Item2 == 4 || comparison.Item1.Equals('J')) return true;
 		if (comparison.Item2 == -1) return false;
 
-		if (pivot.Item1 + direction.Item1 < 0 || pivot.Item1 + direction.Item1 >= input[pivot.Item2].Length || pivot.Item2 + direction.Item2 < 0 || pivot.Item2 + direction.Item2 >= input.Length) return false;
-		var test = input[pivot.Item2 + direction.Item2][pivot.Item1 + direction.Item1];
+		if (pivot.Item1 + direction.Item1 < 0 || pivot.Item2 + direction.Item2 >= input[pivot.Item1].Length || pivot.Item2 + direction.Item2 < 0 || pivot.Item1 + direction.Item1 >= input.Length) return false;
+		var test = input[pivot.Item1 + direction.Item1][pivot.Item2 + direction.Item2];
 		if (test.Equals(comparison.Item1)) return checkAxis((pivot.Item1 + direction.Item1, pivot.Item2 + direction.Item2), input, comparison, direction);
 		
 		return false;
@@ -39,13 +39,13 @@ public class Day04Original : IPuzzle
 	public (string, string) Solve(PuzzleInput input)
 	{
 		int sum = 0;
-		for (int y = 0; y < input.Lines.Length; y++)
+		for (int row = 0; row < input.Lines.Length; row++)
 		{
-			for (int x = 0; x < input.Lines[y].Length; x++)
+			for (int col = 0; col < input.Lines[row].Length; col++)
 			{
-				if (input.Lines[y][x] == 'X')
+				if (input.Lines[row][col] == 'X')
 				{
-					if (checkSurroundings((x, y), input.Lines, 'X')) sum += 1;
+					if (checkSurroundings((row, col), input.Lines, 'X')) sum += 1;
 				}
 			}
 		}
